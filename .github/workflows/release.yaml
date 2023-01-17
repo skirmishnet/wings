@@ -4,6 +4,8 @@ on:
   push:
     tags:
       - "v*"
+  workflow_dispatch:
+    
 
 jobs:
   release:
@@ -33,7 +35,7 @@ jobs:
         env:
           REF: ${{ github.ref }}
         run: |
-          sed -n "/^## ${REF:10}/,/^## /{/^## /b;p}" CHANGELOG.md > ./RELEASE_CHANGELOG
+          sed -n "/^## ${REF:11}/,/^## /{/^## /b;p}" CHANGELOG.md > ./RELEASE_CHANGELOG
 
       - name: Create checksum and add to changelog
         run: |
@@ -46,7 +48,7 @@ jobs:
         env:
           REF: ${{ github.ref }}
         run: |
-          BRANCH=release/${REF:10}
+          BRANCH=release/${REF:11}
           git config --local user.email "ci@pterodactyl.io"
           git config --local user.name "Pterodactyl CI"
           git checkout -b $BRANCH
